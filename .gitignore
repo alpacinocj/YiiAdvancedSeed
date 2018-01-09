@@ -1,8 +1,12 @@
 .idea/
-backend/runtime/
 api/runtime/
+backend/runtime/
 console/runtime/
 slow/runtime/
 website/runtime/
 common/config/config-local.php
-
+api/config/config-local.php
+backend/config/config-local.php
+console/config/config-local.php
+slow/config/config-local.php
+website/config/config-local.php
