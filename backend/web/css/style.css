@@ -1,0 +1,25 @@
+a {
+    color: #337ab7;
+    text-decoration: none;
+}
+.layui-layer-iframe .layui-layer-btn, .layui-layer-page .layui-layer-btn {
+    padding-top: 10px;
+    border-top: 1px solid #eeeeee;
+}
+#toast-container{
+    z-index: 999999999999;
+    width: fit-content;
+    position: fixed;
+    left: 50%;
+    right: 0;
+    top: 0;
+    margin-left: -150px;
+}
+.roll-right.J_tabRight {
+    right: 80px;
+}
+.roll-right.btn-group {
+    right: 0;
+    width: 80px;
+    padding: 0;
+}

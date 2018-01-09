@@ -1,0 +1,27 @@
+{
+    "name": "yii2-api-admin-seed",
+    "description": "Yii2 Advanced Project Template",
+    "keywords": ["yii2", "framework", "advanced", "project template"],
+    "homepage": "http://www.mmlogs.com",
+    "type": "project",
+    "license": "BSD-3-Clause",
+    "support": {
+        "source": "https://github.com/Talkyunyun/yii2-api-admin-seed"
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=7.0.0",
+        "yiisoft/yii2": ">=2.0.13",
+        "yiisoft/yii2-redis": "~2.0.0",
+        "monolog/monolog": "^1.22",
+        "jbzoo/utils": "^2.2"
+    },
+    "require-dev": {
+        "yiisoft/yii2-debug": "~2.0.0",
+        "yiisoft/yii2-gii": "~2.0.0",
+        "yiisoft/yii2-faker": "~2.0.0"
+    },
+    "config": {
+        "process-timeout": 1800
+    }
+}

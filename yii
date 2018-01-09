@@ -1,0 +1,15 @@
+#!/usr/bin/env php
+<?php
+/**
+ * 命令入口文件,不建议在该文件添加或修改代码
+ * @author Gene <https://github.com/Talkyunyun>
+ */
+
+require_once __DIR__ . '/common/config/bootstrap.php';
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/vendor/yiisoft/yii2/Yii.php';
+$config = require_once __DIR__ . '/console/config/config.php';
+
+appAlias();
+$app = new \yii\console\Application($config);
+exit($app->run());
