@@ -1,0 +1,4 @@
+{# 获取静态资源版本号 #}
+{% macro assetsVersion() %}
+    {{- constant('YII_ENV') == constant('ENV_PROD') ? app.params.version : random() -}}
+{% endmacro %}

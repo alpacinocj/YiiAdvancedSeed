@@ -1,27 +1,30 @@
 <?php
+
 namespace backend\controllers;
 
 use Yii;
-use yii\web\Controller;
 use common\utils\Util;
+use yii\web\Controller;
 use common\utils\ResponseUtil;
-use backend\models\SysUser\SysUserLoginLogs;
-use backend\models\SysUser\SysUserLogin;
-use JBZoo\Utils\Email as EmailUtil;
+use backend\models\AdminUserLogin;
+use backend\models\AdminUserLoginLog;
 
 /**
  * 登录控制器
  * Class LoginController
  * @package app\controllers
- * @author Gene <https://github.com/Talkyunyun>
  */
-class LoginController extends Controller {
+class LoginController extends Controller
+{
+
+    public $layout = false;
 
     /**
      * 登录页面
      * @return string
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $this->layout = false;
 
         // 判断是否已登录
@@ -37,7 +40,8 @@ class LoginController extends Controller {
      * 登录处理
      * @return array
      */
-    public function actionDo() {
+    public function actionDo()
+    {
         $request = Yii::$app->request;
 
         try {
@@ -49,33 +53,27 @@ class LoginController extends Controller {
             if(!$isGuest) {
                 return ResponseUtil::success('登录成功');
             }
-            $model = new SysUserLogin();
-            // 用户名/邮箱/手机号登录
-            $account = $request->post('account', false);
-            if (EmailUtil::check($account)) {
-                $model->accountType = 'email';
-            } else {
-                $model->accountType = 'username';
-            }
-            $model->account = $account;
+            $model = new AdminUserLogin();
+            $model->username = $request->post('username', false);
             $model->password = $request->post('password', false);
             if (!$model->login()) {
                 throw new \Exception(Util::getModelError($model->errors), 1001);
             }
             // 记录登录日志
-            SysUserLoginLogs::add();
+            AdminUserLoginLog::add();
 
             return ResponseUtil::success('登录成功');
         } catch (\Exception $e) {
             $msg = $e->getCode() == 0 ? '登录失败' : $e->getMessage();
-
+            //var_dump($e->getMessage()); die;
             return ResponseUtil::error($msg);
         }
     }
 
 
     // 退出登录
-    public function actionLogout() {
+    public function actionLogout()
+    {
         $isGuest = Yii::$app->user->isGuest;
         if(!$isGuest){
             Yii::$app->user->logout();

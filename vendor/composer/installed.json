@@ -732,6 +732,135 @@
         ]
     },
     {
+        "name": "symfony/polyfill-mbstring",
+        "version": "v1.8.0",
+        "version_normalized": "1.8.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/polyfill-mbstring.git",
+            "reference": "3296adf6a6454a050679cde90f95350ad604b171"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://files.phpcomposer.com/files/symfony/polyfill-mbstring/3296adf6a6454a050679cde90f95350ad604b171.zip",
+            "reference": "3296adf6a6454a050679cde90f95350ad604b171",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "suggest": {
+            "ext-mbstring": "For best performance"
+        },
+        "time": "2018-04-26T10:06:28+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.8-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Polyfill\\Mbstring\\": ""
+            },
+            "files": [
+                "bootstrap.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Nicolas Grekas",
+                "email": "p@tchwork.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony polyfill for the Mbstring extension",
+        "homepage": "https://symfony.com",
+        "keywords": [
+            "compatibility",
+            "mbstring",
+            "polyfill",
+            "portable",
+            "shim"
+        ]
+    },
+    {
+        "name": "twig/twig",
+        "version": "v2.4.8",
+        "version_normalized": "2.4.8.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/twigphp/Twig.git",
+            "reference": "7b604c89da162034bdf4bb66310f358d313dd16d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://files.phpcomposer.com/files/twigphp/Twig/7b604c89da162034bdf4bb66310f358d313dd16d.zip",
+            "reference": "7b604c89da162034bdf4bb66310f358d313dd16d",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^7.0",
+            "symfony/polyfill-mbstring": "~1.0"
+        },
+        "require-dev": {
+            "psr/container": "^1.0",
+            "symfony/debug": "^2.7",
+            "symfony/phpunit-bridge": "^3.3"
+        },
+        "time": "2018-04-02T09:24:19+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.4-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Twig_": "lib/"
+            },
+            "psr-4": {
+                "Twig\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com",
+                "homepage": "http://fabien.potencier.org",
+                "role": "Lead Developer"
+            },
+            {
+                "name": "Armin Ronacher",
+                "email": "armin.ronacher@active-4.com",
+                "role": "Project Founder"
+            },
+            {
+                "name": "Twig Team",
+                "homepage": "http://twig.sensiolabs.org/contributors",
+                "role": "Contributors"
+            }
+        ],
+        "description": "Twig, the flexible, fast, and secure template language for PHP",
+        "homepage": "http://twig.sensiolabs.org",
+        "keywords": [
+            "templating"
+        ]
+    },
+    {
         "name": "yiisoft/yii2",
         "version": "2.0.13",
         "version_normalized": "2.0.13.0",
@@ -1133,6 +1262,55 @@
             "cache",
             "redis",
             "session",
+            "yii2"
+        ]
+    },
+    {
+        "name": "yiisoft/yii2-twig",
+        "version": "2.2.0",
+        "version_normalized": "2.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/yiisoft/yii2-twig.git",
+            "reference": "f91a99dcc6564abf6484951e41f0b022a6ea0c89"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://files.phpcomposer.com/files/yiisoft/yii2-twig/f91a99dcc6564abf6484951e41f0b022a6ea0c89.zip",
+            "reference": "f91a99dcc6564abf6484951e41f0b022a6ea0c89",
+            "shasum": ""
+        },
+        "require": {
+            "twig/twig": "~2.0",
+            "yiisoft/yii2": "~2.0.4"
+        },
+        "time": "2017-11-07T20:54:43+00:00",
+        "type": "yii2-extension",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "yii\\twig\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Alexander Makarov",
+                "email": "sam@rmcreative.ru"
+            }
+        ],
+        "description": "The Twig integration for the Yii framework",
+        "keywords": [
+            "renderer",
+            "twig",
             "yii2"
         ]
     }

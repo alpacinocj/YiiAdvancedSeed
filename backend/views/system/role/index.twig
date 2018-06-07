@@ -1,0 +1,125 @@
+{% extends 'layouts/base.twig' %}
+
+{% block title %}
+    {{ '角色列表' }}
+{% endblock %}
+
+{% block content %}
+    <div class="row" style="margin-top:20px;">
+        <div class="col-md-12">
+            <div>
+                <a href="#" class="btn btn-default open_save"
+                   data-title="添加角色"
+                   data-url="{{ url.toRoute('/system/role/create') }}">
+                    <i class="fa fa-plus"></i> 添加角色
+                </a>
+            </div>
+            <hr>
+
+            <div class="table-responsive">
+                <table class="table table-striped table-hover table-bordered">
+                    <thead>
+                    <tr class="active">
+                        <th class="text-center">#ID</th>
+                        <th class="text-center">角色名称</th>
+                        <th class="text-center">角色描述</th>
+                        <th class="text-center">状态</th>
+                        <th class="text-center">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in result %}
+                        <tr>
+                            <td class="text-center">{{ loop.index }}</td>
+                            <td class="text-center">{{ html.encode(item.name) }}</td>
+                            <td class="text-center">{{ html.encode(item.remark) }}</td>
+                            <td class="text-center">
+                                <form class="layui-form">
+                                    <input type="checkbox"
+                                           lay-skin="switch"
+                                           lay-filter="statusOn"
+                                           lay-text="正常|禁用"
+                                           value="{{ item.id }}" {{ item.status == 1 ? 'checked' : '' }}>
+                                </form>
+                            </td>
+                            <td class="text-center">
+                                <a href="#"
+                                   class="open_save"
+                                   data-title="{{ item.name }} - 编辑角色"
+                                   data-url="{{ path(['/system/role/update'], {'id': item.id}) }}"
+                                >编辑</a>
+                                <span>&nbsp;|&nbsp;</span>
+                                <a href="#"
+                                   class="delete_btn"
+                                   data-id="{{ item.id }}"
+                                >删除</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td class="text-center" colspan="20">暂无数据</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            {{ linkPagerWidget.widget({'pagination': page})|raw }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(function() {
+            $('.open_save').click(function() {
+                var url   = $(this).attr('data-url');
+                var title = $(this).attr('data-title');
+                app.openParentWin({
+                    url  : url,
+                    title: title,
+                    callback: function(index, dom) {
+                        $(dom).find("iframe")[0].contentWindow.submit(index, function(res) {
+                            if (res === true) {
+                                window.location.reload();
+                            }
+                        });
+                    }
+                });
+            });
+
+            $('.delete_btn').click(function() {
+                var id = $(this).attr('data-id');
+
+                app.layer.confirm('您确定要删除吗？', {
+                    btn: ['确认', '取消']
+                }, function(){
+                    app.post("{{ url.toRoute('/system/role/del') }}", {
+                        id : id
+                    }, function(res) {
+                        if (res !== false) {
+                            app.showMsg(res);
+                            window.location.reload();
+                        }
+                    });
+                }, function(){});
+            });
+
+            setTimeout(function() {
+                console.log(app.form)
+                app.form.on('switch(statusOn)', function(data){
+                    app.post("{{ url.toRoute('/system/role/on-off') }}", {
+                        id : data.value
+                    }, function(res) {
+                        if (res == 1) {
+                            app.showMsg('设置成功');
+                            window.location.reload();
+                        } else {
+                            app.showMsg('设置失败', 'error');
+                        }
+                    });
+                });
+            }, 1000);
+        });
+    </script>
+{% endblock %}

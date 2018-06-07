@@ -21,12 +21,11 @@ if (
 }
 
 // 只有正式环境debug关闭，其他默认打开
-defined('YII_DEBUG') or define('YII_DEBUG', YII_ENV == ENV_PRD ? false : true);
+defined('YII_DEBUG') or define('YII_DEBUG', YII_ENV == ENV_PROD ? false : true);
 
 function dd($data = []) {
     var_dump($data);die;
 }
-
 
 function appAlias() {
     // 公共模块

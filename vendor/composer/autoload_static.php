@@ -8,6 +8,7 @@ class ComposerStaticInitf1f00bc56b5fac0994be09ba35832991
 {
     public static $files = array (
         '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
+        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         'f908a6a2fa708563d9e6c6f6a681826a' => __DIR__ . '/..' . '/jbzoo/data/src/functions.php',
         '80bdbe1b5ecca1d9a519819a74d72267' => __DIR__ . '/..' . '/jbzoo/utils/src/defines.php',
     );
@@ -15,6 +16,7 @@ class ComposerStaticInitf1f00bc56b5fac0994be09ba35832991
     public static $prefixLengthsPsr4 = array (
         'y' => 
         array (
+            'yii\\twig\\' => 9,
             'yii\\redis\\' => 10,
             'yii\\gii\\' => 8,
             'yii\\faker\\' => 10,
@@ -26,6 +28,14 @@ class ComposerStaticInitf1f00bc56b5fac0994be09ba35832991
         'c' => 
         array (
             'cebe\\markdown\\' => 14,
+        ),
+        'T' => 
+        array (
+            'Twig\\' => 5,
+        ),
+        'S' => 
+        array (
+            'Symfony\\Polyfill\\Mbstring\\' => 26,
         ),
         'P' => 
         array (
@@ -47,6 +57,10 @@ class ComposerStaticInitf1f00bc56b5fac0994be09ba35832991
     );
 
     public static $prefixDirsPsr4 = array (
+        'yii\\twig\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/yiisoft/yii2-twig',
+        ),
         'yii\\redis\\' => 
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2-redis',
@@ -79,6 +93,14 @@ class ComposerStaticInitf1f00bc56b5fac0994be09ba35832991
         array (
             0 => __DIR__ . '/..' . '/cebe/markdown',
         ),
+        'Twig\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/twig/twig/src',
+        ),
+        'Symfony\\Polyfill\\Mbstring\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
+        ),
         'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
@@ -102,6 +124,13 @@ class ComposerStaticInitf1f00bc56b5fac0994be09ba35832991
     );
 
     public static $prefixesPsr0 = array (
+        'T' => 
+        array (
+            'Twig_' => 
+            array (
+                0 => __DIR__ . '/..' . '/twig/twig/lib',
+            ),
+        ),
         'H' => 
         array (
             'HTMLPurifier' => 

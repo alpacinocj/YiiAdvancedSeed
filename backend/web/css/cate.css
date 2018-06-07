@@ -1,0 +1,22 @@
+html, body, .container-fluid, .row{height:100%}
+.node_edit{
+    height: 100%;
+    overflow: hidden;
+    overflow-y: auto;
+    border-left: 1px solid #e2e2e2;
+}
+.nodes h3, .node_edit h3{
+    /*background: #607D8B;*/
+    margin-top: 20px;
+    height: 30px;
+    line-height: 30px;
+    /*color: #fff;*/
+    padding-left: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+#menuBox {
+    margin-top: 10px;
+    background: #eaeaea;
+    padding:20px 0;
+}

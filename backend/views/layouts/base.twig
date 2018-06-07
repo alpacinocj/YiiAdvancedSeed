@@ -1,0 +1,26 @@
+{% import 'macros/globals.twig' as globals %}
+<!DOCTYPE html>
+<html lang="{{ app.language }}">
+<head>
+    <meta charset="{{ app.charset }}" />
+    <title>{% spaceless %}{% block title %}{% endblock %}{% endspaceless %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/js/plugins/layui/css/layui.css?v={{ globals.assetsVersion() }}" />
+    <link rel="stylesheet" href="/css/style.css?v={{ globals.assetsVersion() }}">
+    {% block style %}{% endblock %}
+</head>
+<body>
+<div class="container-fluid">{% block content %}{% endblock %}</div>
+<script type="text/javascript">
+    window.token = "{{ app.request.csrfToken }}";
+</script>
+<script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/template.js?v={{ globals.assetsVersion() }}"></script>
+<script src="/js/plugins/layui/layui.js?v={{ globals.assetsVersion() }}"></script>
+<script src="/js/app.js?v={{ globals.assetsVersion() }}"></script>
+{% block script %}{% endblock %}
+</body>
+</html>

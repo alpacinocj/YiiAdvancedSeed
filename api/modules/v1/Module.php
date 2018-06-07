@@ -3,7 +3,6 @@ namespace api\modules\v1;
 
 /**
  * 版本模块入口文件
- * @author Gene <https://github.com/Talkyunyun>
  */
 class Module extends \yii\base\Module {
 

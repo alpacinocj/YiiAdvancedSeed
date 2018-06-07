@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'yii\\twig\\' => array($vendorDir . '/yiisoft/yii2-twig'),
     'yii\\redis\\' => array($vendorDir . '/yiisoft/yii2-redis'),
     'yii\\gii\\' => array($vendorDir . '/yiisoft/yii2-gii'),
     'yii\\faker\\' => array($vendorDir . '/yiisoft/yii2-faker'),
@@ -14,6 +15,8 @@ return array(
     'yii\\bootstrap\\' => array($vendorDir . '/yiisoft/yii2-bootstrap'),
     'yii\\' => array($vendorDir . '/yiisoft/yii2'),
     'cebe\\markdown\\' => array($vendorDir . '/cebe/markdown'),
+    'Twig\\' => array($vendorDir . '/twig/twig/src'),
+    'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'JBZoo\\Utils\\' => array($vendorDir . '/jbzoo/utils/src'),

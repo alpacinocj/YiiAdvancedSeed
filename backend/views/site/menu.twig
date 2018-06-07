@@ -1,0 +1,34 @@
+{% for row in menu %}
+    <li>
+        <a href="#">
+            <i class="fa fa-{{ row.font_icon is not empty ? row.font_icon : 'leaf' }}"></i>
+            <span class="nav-label">{{ html.encode(row.text) }}</span>
+            <span class="fa arrow"></span>
+        </a>
+        <ul class="nav nav-second-level">
+            {% for r in row.children %}
+                {% if r.children is not empty %}
+                    <li>
+                        <a href="#">
+                            <span class="nav-label">{{ html.encode(r.text) }}</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-third-level">
+                            {% for rr in row.children %}
+                                <li>
+                                    <a class="J_menuItem"
+                                       href="{{ url.toRoute(rr.url_key) }}">{{ html.encode(rr.text) }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% else %}
+                    <li>
+                        <a class="J_menuItem"
+                           href="{{ url.toRoute(r.url_key) }}">{{ html.encode(r.text) }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </li>
+{% endfor %}

@@ -14,7 +14,8 @@
         "yiisoft/yii2": ">=2.0.13",
         "yiisoft/yii2-redis": "~2.0.0",
         "monolog/monolog": "^1.22",
-        "jbzoo/utils": "^2.2"
+        "jbzoo/utils": "^2.2",
+        "yiisoft/yii2-twig": "^2.2"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

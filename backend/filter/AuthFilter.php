@@ -1,4 +1,5 @@
 <?php
+
 namespace backend\filter;
 
 use yii\base\ActionFilter;
@@ -7,9 +8,9 @@ use yii\base\ActionFilter;
  * 登录拦截器
  * Class AuthFilter
  * @package backend\filter
- * @author Gene <https://github.com/Talkyunyun>
  */
-class AuthFilter extends ActionFilter {
+class AuthFilter extends ActionFilter
+{
     public $rules = [];
 
     public $actions = [];
@@ -20,7 +21,8 @@ class AuthFilter extends ActionFilter {
      * @param \yii\base\Action $action
      * @return bool|void
      */
-    public function beforeAction($action) {
+    public function beforeAction($action)
+    {
         $isGuest = \Yii::$app->user->isGuest;
         if ($isGuest) {
             return \Yii::$app->response->redirect('/login')->send();

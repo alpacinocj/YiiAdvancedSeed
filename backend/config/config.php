@@ -26,13 +26,32 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass'   => 'backend\models\SysUser',
+            'identityClass'   => 'backend\models\AdminUser',
             'enableAutoLogin' => true,
         ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName'  => false,
             'rules' => require_once __DIR__ . '/routes.php'
+        ],
+        'view' => [
+            'class' => 'yii\web\View',
+            'defaultExtension' => 'twig',
+            'renderers' => [
+                'twig' => [
+                    'class' => 'yii\twig\ViewRenderer',
+                    'cachePath' => '@runtime/twig/cache',
+                    'options' => [
+                        'auto_reload' => true,
+                    ],
+                    'globals' => [
+                        'html' => ['class' => \yii\helpers\Html::class],
+                        'url' => ['class' => \yii\helpers\Url::class],
+                        'yii' => ['class' => \Yii::class],
+                        'linkPagerWidget' => ['class' => backend\components\LinkPagerWidget::class],
+                    ],
+                ],
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

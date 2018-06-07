@@ -1,129 +1,214 @@
--- ================================== --
--- ========= 项目基本表结构 ========== --
--- ================================== --
+-- MySQL dump 10.13  Distrib 5.7.17, for linux-glibc2.5 (x86_64)
+--
+-- Host: localhost    Database: qhyl_bi
+-- ------------------------------------------------------
+-- Server version	5.7.17-log
 
--- 数据库名称 注意utf8mb4编码
--- CREATE DATABASE seed_project;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+--
+-- Current Database: `qhyl_bi`
+--
 
--- 系统用户表
-CREATE TABLE sys_users (
-    id int(11) unsigned PRIMARY KEY AUTO_INCREMENT comment '用户UID',
-    email varchar(50) not null comment '登录邮箱',
-    password char(60) not null comment '登录密码',
-    real_name varchar(20) not null default '' comment '真实姓名',
-    phone varchar(18) not null default '' comment '联系号码',
-    auth_key varchar(60) not null default '' comment 'auth_key',
-    access_token varchar(60) not null default '' comment 'access_token',
-    status tinyint(1) unsigned not null default 1 comment '状态，0：禁用，1：正常',
-    birth_date DATE DEFAULT NULL comment '生日日期',
-    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP comment '创建时间',
-    updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP comment '更新时间',
-    UNIQUE KEY email (email),
-    key status(status)
-) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COMMENT '系统用户表';
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `qhyl_bi` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 
--- 插入admin@126.com用户密码123456
-INSERT INTO `sys_users` (`id`, `email`, `password`, `real_name`, `phone`, `auth_key`, `access_token`, `status`, `birth_date`, `created`, `updated`) VALUES
-	(1, 'admin@126.com', '$2y$13$2TY3rdo.Y3jUoZ6O3STC4OAWDFux1Q3h5yzRqDpLYJQSjmTxt6qxK','admin','','','',1,'2017-09-30','2017-09-15 15:09:18','2017-09-15 20:09:42');
+USE `qhyl_bi`;
 
+--
+-- Table structure for table `sys_access`
+--
 
--- 系统用户登录日志表
-CREATE TABLE sys_users_login_logs (
-    id bigint unsigned PRIMARY KEY AUTO_INCREMENT,
-    uid int(11) unsigned not null comment '登录UID',
-    ip varchar(15) not null default '' comment '登录IP',
-    data text comment '请求参数,json格式',
-    url varchar(255) not null default '' comment '请求Url地址',
-    client_name varchar(60) not null default '' comment '客户端名称',
-    client_version varchar(60) not null default '' comment '客户端版本',
-    client_platform varchar(60) not null default '' comment '客户端系统',
-    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP comment '登录时间',
-    key uid (uid)
-) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 comment '系统用户登录日志表';
+DROP TABLE IF EXISTS `sys_access`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_access` (
+  `role_id` int(11) unsigned NOT NULL COMMENT '角色ID',
+  `node_id` int(11) unsigned NOT NULL COMMENT '节点ID,sys_node中的ID',
+  KEY `role_id` (`role_id`),
+  KEY `node_id` (`node_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限表';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `sys_access`
+--
 
--- 权限表
-CREATE TABLE sys_permission (
-    role_id int(11) unsigned not null comment '角色ID',
-    node_id int(11) unsigned not null comment '节点ID,sys_node中的ID',
-    KEY role_id (role_id),
-    KEY node_id (node_id)
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COMMENT '权限表';
+LOCK TABLES `sys_access` WRITE;
+/*!40000 ALTER TABLE `sys_access` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sys_access` ENABLE KEYS */;
+UNLOCK TABLES;
 
--- 操作节点表
-CREATE TABLE sys_node (
-    id int(11) unsigned PRIMARY KEY AUTO_INCREMENT,
-    pid int(11) unsigned not null default 0 comment '父级ID,0:顶级节点',
-    name varchar(100) not null comment '操作名称，或菜单名',
-    url varchar(255) not null default '' comment 'url地址',
-    status tinyint(1) unsigned not null default 1 comment '状态,1正常  0禁用',
-    is_menu tinyint(1) unsigned not null default 0 comment '是否是菜单，0：否，1：是',
-    level tinyint(1) unsigned not null default 1 comment '等级',
-    can_del tinyint(1) unsigned not null default 1 comment '是否可以删除，0：不可以，1：可以',
-    sort int(11) unsigned null default 0 comment '排序',
-    font_icon varchar(100) null default '' comment '菜单字体图片',
-    KEY level (level),
-    KEY pid (pid),
-    KEY status (status),
-    KEY is_menu(is_menu)
-) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COMMENT '操作节点表';
+--
+-- Table structure for table `sys_admin_user`
+--
 
--- 插入记录
-INSERT INTO `sys_node` (`id`, `pid`, `name`, `url`, `status`, `is_menu`, `level`, `can_del`, `sort`, `font_icon`) VALUES 
-	(1,0,'系统管理','#',1,1,1,0,0,'cog'),
-	(2,1,'菜单管理','/system/node/index',1,1,1,0,0,''),
-	(3,1,'角色管理','/system/role/index',1,1,1,0,0,''),
-	(4,1,'系统用户','/system/user/index',1,1,1,0,0,'');
+DROP TABLE IF EXISTS `sys_admin_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_admin_user` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户UID',
+  `username` varchar(50) NOT NULL COMMENT '用户名',
+  `password` char(60) NOT NULL COMMENT '登录密码',
+  `real_name` varchar(20) NOT NULL DEFAULT '' COMMENT '真实姓名',
+  `phone` varchar(18) NOT NULL DEFAULT '' COMMENT '联系号码',
+  `email` varchar(30) NOT NULL DEFAULT '' COMMENT '电子邮箱',
+  `auth_key` varchar(60) NOT NULL DEFAULT '' COMMENT 'auth_key',
+  `access_token` varchar(60) NOT NULL DEFAULT '' COMMENT 'access_token',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态，0：禁用，1：正常',
+  `tag` varchar(10) NOT NULL DEFAULT 'backend' COMMENT '用户标签',
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`),
+  KEY `status` (`status`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='系统用户表';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `sys_admin_user`
+--
 
--- 角色表
-CREATE TABLE sys_role (
-    id int(11) unsigned PRIMARY KEY AUTO_INCREMENT,
-    name varchar(100) not null default '' comment '角色名字',
-    status tinyint(1) unsigned not null default 1 comment '状态，1正常 0禁用',
-    remark varchar(255) not null default '' comment '备注',
-    KEY status (status)
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COMMENT '角色表';
+LOCK TABLES `sys_admin_user` WRITE;
+/*!40000 ALTER TABLE `sys_admin_user` DISABLE KEYS */;
+INSERT INTO `sys_admin_user` VALUES (1,'admin','$2y$13$BQnSOa4K0M3t/L.3ZaoKM.LAELaj2KDlIEqUPNMLwH5/M7Phj9H9a','admin','','admin@126.com','','',1,'backend','2017-09-14 23:09:18','2018-04-13 07:07:40');
+/*!40000 ALTER TABLE `sys_admin_user` ENABLE KEYS */;
+UNLOCK TABLES;
 
--- 插入角色数据
-INSERT INTO `sys_role` (`id`, `name`, `status`, `remark`) VALUES 
-	(1,'系统管理员',1,'系统管理员');
+--
+-- Table structure for table `sys_admin_user_login_log`
+--
 
+DROP TABLE IF EXISTS `sys_admin_user_login_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_admin_user_login_log` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` int(11) unsigned NOT NULL COMMENT '登录UID',
+  `ip` varchar(15) NOT NULL DEFAULT '' COMMENT '登录IP',
+  `data` text COMMENT '请求参数,json格式',
+  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '请求Url地址',
+  `client_name` varchar(60) NOT NULL DEFAULT '' COMMENT '客户端名称',
+  `client_version` varchar(60) NOT NULL DEFAULT '' COMMENT '客户端版本',
+  `client_platform` varchar(60) NOT NULL DEFAULT '' COMMENT '客户端系统',
+  `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '登录时间',
+  PRIMARY KEY (`id`),
+  KEY `uid` (`uid`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='系统用户登录日志表';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- 用户角色表
-CREATE TABLE sys_users_role (
-    role_id int(11) unsigned default 0 comment '角色ID，对应sys_role表主键',
-    user_id int(11) unsigned default 0 comment '用户ID',
-    KEY role_id (role_id),
-    KEY user_id (user_id)
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COMMENT '系统用户角色表';
+--
+-- Dumping data for table `sys_admin_user_login_log`
+--
 
+LOCK TABLES `sys_admin_user_login_log` WRITE;
+/*!40000 ALTER TABLE `sys_admin_user_login_log` DISABLE KEYS */;
+INSERT INTO `sys_admin_user_login_log` VALUES (1,1,'192.168.0.109','{\"post\":{\"account\":\"admin\",\"password\":\"123456\",\"token\":\"W2YJc0ojRTuBHUdZ_GJZxcsasCa8xS62rxHTDNG2VAQyUVAKJHV3frJtcj63J2yfh1PIUtiXW_vOWJFklI4NKQ==\"},\"get\":[]}','http://bi.backend.com/login/do','Google Chrome','66.0.3359.181','MAC','2018-06-07 09:02:31');
+/*!40000 ALTER TABLE `sys_admin_user_login_log` ENABLE KEYS */;
+UNLOCK TABLES;
 
+--
+-- Table structure for table `sys_node`
+--
 
+DROP TABLE IF EXISTS `sys_node`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_node` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `pid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '父级ID,0:顶级节点',
+  `name` varchar(100) NOT NULL COMMENT '操作名称，或菜单名',
+  `url` varchar(255) NOT NULL DEFAULT '' COMMENT 'url地址',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态,1正常  0禁用',
+  `is_menu` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否是菜单，0：否，1：是',
+  `level` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '等级',
+  `can_del` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否可以删除，0：不可以，1：可以',
+  `sort` int(11) unsigned DEFAULT '0' COMMENT '排序',
+  `font_icon` varchar(100) DEFAULT '' COMMENT '菜单字体图片',
+  PRIMARY KEY (`id`),
+  KEY `level` (`level`),
+  KEY `pid` (`pid`),
+  KEY `status` (`status`),
+  KEY `is_menu` (`is_menu`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='操作节点表';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `sys_node`
+--
 
+LOCK TABLES `sys_node` WRITE;
+/*!40000 ALTER TABLE `sys_node` DISABLE KEYS */;
+INSERT INTO `sys_node` VALUES (1,0,'系统管理','#',1,1,1,0,0,'cog'),(2,1,'菜单管理','/system/node/index',1,1,1,0,0,''),(3,1,'角色管理','/system/role/index',1,1,1,0,0,''),(4,1,'系统用户','/system/user/index',1,1,1,0,0,'');
+/*!40000 ALTER TABLE `sys_node` ENABLE KEYS */;
+UNLOCK TABLES;
 
--- 用户表(客户端)
-CREATE TABLE g_clients (
-	id bigint unsigned PRIMARY KEY AUTO_INCREMENT,
-	mobile varchar(14) not null default '' comment '手机号码',
-	email varchar(100) not null default '' comment '联系邮箱',
-	password char(60) not null default '' comment '密码',
-	first_name varchar(50) not null default '',
-	last_name varchar(50) not null default '',
-	nickname varchar(40) not null default '' comment '昵称',
-	avatar_url varchar(255) not null default '' comment '用户头像',
-	gender tinyint(1) unsigned not null default 0 comment '性别,1:男 2:女 0:未知',
-	language varchar(100) not null default '' comment '客户端语言',
-	wechat_openid varchar(100) not null default '' comment '用户微信唯一标识',
-	created datetime default CURRENT_TIMESTAMP comment '添加时间',
-	updated datetime default CURRENT_TIMESTAMP comment '修改时间',
-	status tinyint(1) unsigned not null default 1 comment '状态，0：禁用，1：正常',
-	KEY wechat_openid(wechat_openid),
-	KEY status(status)
-) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COMMENT '用户表(客户端)';
+--
+-- Table structure for table `sys_role`
+--
 
+DROP TABLE IF EXISTS `sys_role`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_role` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL DEFAULT '' COMMENT '角色名字',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态，1正常 0禁用',
+  `remark` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',
+  PRIMARY KEY (`id`),
+  KEY `status` (`status`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='角色表';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `sys_role`
+--
 
+LOCK TABLES `sys_role` WRITE;
+/*!40000 ALTER TABLE `sys_role` DISABLE KEYS */;
+INSERT INTO `sys_role` VALUES (1,'系统管理员',1,'系统管理员');
+/*!40000 ALTER TABLE `sys_role` ENABLE KEYS */;
+UNLOCK TABLES;
 
+--
+-- Table structure for table `sys_role_user`
+--
+
+DROP TABLE IF EXISTS `sys_role_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_role_user` (
+  `role_id` int(11) unsigned DEFAULT '0' COMMENT '角色ID，对应sys_role表主键',
+  `user_id` int(11) unsigned DEFAULT '0' COMMENT '用户ID',
+  KEY `role_id` (`role_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统用户角色表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_role_user`
+--
+
+LOCK TABLES `sys_role_user` WRITE;
+/*!40000 ALTER TABLE `sys_role_user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sys_role_user` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2018-06-07 18:40:04
