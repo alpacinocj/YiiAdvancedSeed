@@ -1,3 +1,15 @@
+.mg-tp-10 {
+    margin-top: 10px;
+}
+
+.mg-tp-20 {
+    margin-top: 20px;
+}
+
+mg-tp-40 {
+    margin-top: 40px;
+}
+
 a {
     color: #337ab7;
     text-decoration: none;

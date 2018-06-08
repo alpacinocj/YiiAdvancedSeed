@@ -120,7 +120,7 @@ class RoleController extends BaseController
                 throw new \Exception('非法访问', 1001);
             }
             $data = $request->post();
-            $id = (int)$data['id'];
+            $id = isset($data['id']) ? (int) $data['id'] : 0;
             if (empty($id)) {// 添加
                 $model = new Role();
             } else {// 修改

@@ -92,7 +92,7 @@
             <div class="role_box">
                 <h3>角色分配</h3>
                 <ul>
-                    {% for role in roles %}
+                    {% for item in roles %}
                         <li>
                             <input type="checkbox" name="role_id[]" class="role_id"
                                    value="{{ item.id }}" lay-skin="primary" title="{{ item.name }}"

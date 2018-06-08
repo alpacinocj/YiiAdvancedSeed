@@ -57,11 +57,25 @@ $config = [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
                 [
-                    'class'   => 'yii\log\FileTarget',
-                    'levels'  => ['error', 'warning', 'trace' ,'info'],
+                    'class' => 'yii\log\FileTarget',
                     'logVars' => [],
-                    'logFile' => '@backend/runtime/logs/run_'.date('Y-m-d').'.log'
-                ]
+                    'categories' => ['user'],
+                    'logFile' => '@backend/runtime/logs/user_' . date('Ymd') . '.log',
+                ],
+                // exception category log
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'logVars' => [],
+                    'categories' => ['exception'],
+                    'logFile' => '@backend/runtime/logs/exception_' . date('Ymd') . '.log',
+                ],
+                // exception category log
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'logVars' => [],
+                    'categories' => ['event'],
+                    'logFile' => '@backend/runtime/logs/event_' . date('Ymd') . '.log',
+                ],
             ]
         ]
     ]

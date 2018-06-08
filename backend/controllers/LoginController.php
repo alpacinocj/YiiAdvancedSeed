@@ -66,6 +66,7 @@ class LoginController extends Controller
         } catch (\Exception $e) {
             $msg = $e->getCode() == 0 ? '登录失败' : $e->getMessage();
             //var_dump($e->getMessage()); die;
+            \Yii::error($e->getMessage() . "\n" . $e->getTraceAsString(), 'user');
             return ResponseUtil::error($msg);
         }
     }

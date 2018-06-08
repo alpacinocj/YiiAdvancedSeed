@@ -191,7 +191,6 @@ class UserController extends BaseController
             if (!empty($isPassword)) {
                 $model->password = AdminUser::getNewPassword($password);
             }
-            $model->updated    = date('Y-m-d');
             if (!$model->validate()) {
                 throw new \Exception(Util::getModelError($model->errors), 1001);
             }
@@ -224,8 +223,7 @@ class UserController extends BaseController
             return ResponseUtil::success('保存成功');
         } catch (\Exception $e) {
             $dbTrans->rollBack();
-            $msg = $e->getCode() == 0 ? '保存失败' : $e->getMessage();
-
+            $msg = $e->getMessage() ?: '保存失败';
             return ResponseUtil::error($msg);
         }
     }

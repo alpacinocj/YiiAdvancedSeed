@@ -4,12 +4,23 @@ namespace common\models\Admin;
 
 use common\models\BaseModel;
 use yii\web\IdentityInterface;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * 系统用户表
  * @package common\models\Admin
- * @property string $password 用户登录密码
- * @property string $updated 修改时间
+ * @property int $id
+ * @property string $username 用户名
+ * @property string $password 登录密码
+ * @property string $real_name 真实姓名
+ * @property string $phone 电话
+ * @property string $email 邮箱
+ * @property string $auth_key
+ * @property string $access_token
+ * @property int $status 状态(0禁用, 1启用)
+ * @property string $tag 用户标签
+ * @property int $created 新增时间
+ * @property int $updated 更新时间
  */
 class AdminUser extends BaseModel implements IdentityInterface
 {
@@ -18,6 +29,20 @@ class AdminUser extends BaseModel implements IdentityInterface
     public static function tableName()
     {
         return 'sys_admin_user';
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'created',
+                'updatedAtAttribute' => 'updated',
+                'value' => function() {
+                    return time();
+                }
+            ]
+        ];
     }
 
     // 规则
@@ -30,7 +55,6 @@ class AdminUser extends BaseModel implements IdentityInterface
             ['status', 'in', 'range' => [1, 0], 'message' => '非法的状态值'],
             ['email', 'email', 'message' => '非法的电子邮箱'],
             ['phone', 'match', 'pattern' => '/^1[3,4,5,7,8][0-9]{9}$/', 'message' => '非法的手机号码'],
-            ['birth_date', 'default', 'value' => null]
         ];
     }
 
@@ -48,8 +72,8 @@ class AdminUser extends BaseModel implements IdentityInterface
     public function scenarios()
     {
         return [
-            'create' => ['username', 'password', 'real_name', 'status', 'email', 'phone', 'birth_date'],
-            'update' => ['username', 'real_name', 'status', 'email', 'phone', 'birth_date'],
+            'create' => ['username', 'password', 'real_name', 'status', 'email', 'phone'],
+            'update' => ['username', 'real_name', 'status', 'email', 'phone'],
             'update_password' => ['password', 'updated']
         ];
     }
